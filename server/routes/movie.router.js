@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
         // catch for second query
         console.log(err);
         res.sendStatus(500)
-      })
+      }) 
 
 // Catch for first query
   }).catch(err => {

@@ -12,8 +12,23 @@ import createSagaMiddleware from 'redux-saga';
 
 // Create the rootSaga generator function
 function* rootSaga() {
-
+    yield takeEvery ('FETCH_MOVIES', fetchMovies);
+    yield takeEvery ('FETCH_GENRES', addElement);
 }
+
+function* fetchElements() {
+    // Move GET request from App.js
+    console.log('In fetchMovies saga');
+    // Go to server, update redux store with data from server
+    try {
+        // get data from db
+        const response = yield axios.get('/api/element');
+        // put data into store via Reducer
+        yield put({ type: 'SET_ELEMENTS', payload: response.data });
+    } catch ( error ) {
+        console.log('error with element get request', error);
+    }
+} 
 
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();

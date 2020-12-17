@@ -5,7 +5,7 @@ For this weekend challenge you'll be building a movie management application!
 We'll be able to see movies that exist in our DB. We'll also be able to see detailed view for each individual movie, including genres associated with that movie. We'll also be able to add a new movie's information.
 
 
-
+ 
 ## Database Setup
 
 1. Create a database named `saga_movies_weekend`
