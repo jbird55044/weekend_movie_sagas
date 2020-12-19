@@ -11,10 +11,14 @@ class AddMovieForm extends Component {
             title: '',
             poster: '',
             description: '',
-            genre_id: 0,
+            genre_id: [],
         }
     }
 
+    componentDidMount() {
+        // use component did mount to dispatch an action to request the plantList from the API
+        this.props.dispatch({type: 'FETCH_GENRES_TABLE'});
+    }
     renderGenreSelectionList(){
         let genreArray = [];
         let genre = this.props.reduxState.genreListTable;
@@ -46,8 +50,9 @@ class AddMovieForm extends Component {
                 <input onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" />
                 <input onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" />
                 <input onChange={(event)=>this.handleChangeFor(event, 'description')} type="text" placeholder="description" />
-                <select id="rating" name="rating" onChange={(event)=>this.handleChangeFor(event, 'genre_id')}>
-                    {this.renderGenreSelectionList()}
+                <p></p>
+                <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple >
+                        {this.renderGenreSelectionList()}
                 </select>
                 <input type="submit" value="Submit" />
             </form>
