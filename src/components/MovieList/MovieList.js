@@ -23,17 +23,12 @@ class MovieList extends Component {
         // this.addPizza()
     }
 
-    detailsPage = () => {
-        this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: this.props.movie.description});
+    detailsPage = (id, description) => {
+        this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: description});
         // console.log (`history`, this.props.history);
         this.props.history.push("/DetailsPage");
     };
     
-    itemPage = () => {
-        this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: this.props.movie.description});
-        // console.log (`history`, this.props.history);
-        this.props.history.push("/DetailsPage");
-    };
     // deletePlant = (evt) => {
     //     console.log(evt.target.value);
     //     let plantId = Number(evt.target.value);
@@ -50,7 +45,6 @@ class MovieList extends Component {
             <div>
                 <hr/>
                 <h3>Movie List:</h3>
-                <button onClick={this.itemPage}>ItemPGE</button>
                     {/* {JSON.stringify(this.props.reduxState.movieList)} */}
                     {/* {JSON.stringify(this.props.reduxState.genreListTable)} */}
                             {this.props.reduxState.movieList.map((movie, index) => {
@@ -62,7 +56,7 @@ class MovieList extends Component {
                                         <button onClick={this.togglAddRemove}>
                                             {this.state.showAdd ? `Option A!` : `Option B!`}
                                         </button>
-                                        <button onClick={this.detailsPage}>Get Details!</button>
+                                        <button onClick={(event)=>this.detailsPage(movie.id, movie.description)}>Get Details!</button>
                                         <section>
                                             { this.state.showAdd && // if this part is false, the next part won't show
                                                 `Name: ${movie.title}` } 

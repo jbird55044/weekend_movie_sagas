@@ -11,14 +11,18 @@ class DetailsPage extends Component {
         showAdd: true,
         pizzaChoice: ''
     }
-
+    backToList = () => {
+        this.props.history.push("/MovieList");
+    };
 
     render() {
 
         return (
             <div className="detailsClass">
-              <h1>Details</h1>
-              {JSON.stringify(this.props.reduxState.currentMovieDetails)}
+                <h1>Details</h1>
+                {JSON.stringify(this.props.reduxState.currentMovieDetails)}
+                <p>&nbsp;</p>
+                <button onClick={this.backToList}>Back To List</button>
             </div>
         )
     }
