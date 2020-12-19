@@ -26,7 +26,7 @@ class DetailsPage extends Component {
                 <h3>Genres Associtated to this Movie:</h3>
                 {this.props.reduxState.movieGenres.map((genre, index) => {
                         return (
-                          <p>{genre.name}</p>
+                          <p key={index}>{genre.name}</p>
                         );
                     })}
             </div>
