@@ -18,7 +18,19 @@ function* rootSaga() {
     yield takeEvery ('FETCH_MOVIES', fetchMovies);
     yield takeEvery ('FETCH_GENRES', fetchGenres);
     yield takeEvery ('FETCH_GENRES_TABLE', fetchGenresTable);
+    yield takeEvery('ADD_MOVIE', addMovie);
 }
+
+function* addMovie( action ) {
+    console.log('index post AddMovie', action.payload);
+    try { 
+        yield axios.post('/api/movie', action.payload)
+        yield put({ type: 'FETCH_MOVIES' }) 
+    } catch (error) {
+        console.log('error with add favorite request', error);
+    }
+}
+
 
 function* fetchMovies() {
     // Move GET request from App.js

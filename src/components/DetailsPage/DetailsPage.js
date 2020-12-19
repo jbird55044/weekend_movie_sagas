@@ -19,10 +19,14 @@ class DetailsPage extends Component {
 
         return (
             <div className="detailsClass">
-                <h1>Details</h1>
-                {JSON.stringify(this.props.reduxState.currentMovieDetails)}
+                <h1>Details About your Movie:</h1>
+                <p>{this.props.reduxState.currentMovieDetails}</p>
                 <p>&nbsp;</p>
                 <button onClick={this.backToList}>Back To List</button>
+
+                <h3>Genres Associtated to this Movie:</h3>
+
+
             </div>
         )
     }

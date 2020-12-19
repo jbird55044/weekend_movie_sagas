@@ -29,41 +29,29 @@ class MovieList extends Component {
         this.props.history.push("/DetailsPage");
     };
     
-    // deletePlant = (evt) => {
-    //     console.log(evt.target.value);
-    //     let plantId = Number(evt.target.value);
-    //     this.props.dispatch( {type: 'DELETE_PLANT', payload: plantId});
-    // }
-
-    // detailPlant = (event, plantId) => {
-    //     console.log('in Detail Plant:', event, plantId);
-    //     this.props.dispatch( {type: 'DETAIL_PLANT', payload: plantId});
-    // }
 
     render() {
         return (
             <div>
                 <hr/>
                 <h3>Movie List:</h3>
-                    {/* {JSON.stringify(this.props.reduxState.movieList)} */}
-                    {/* {JSON.stringify(this.props.reduxState.genreListTable)} */}
-                            {this.props.reduxState.movieList.map((movie, index) => {
-                                return (
-                                    <div className="card">
-                                        <img width="135px" height="135px" src={movie.poster} alt={movie.title}/>
-                                        <h2>Title: {movie.title}</h2>
-                                        <p>ID:{movie.id}</p>
-                                        <button onClick={this.togglAddRemove}>
-                                            {this.state.showAdd ? `Option A!` : `Option B!`}
-                                        </button>
-                                        <button onClick={(event)=>this.detailsPage(movie.id, movie.description)}>Get Details!</button>
-                                        <section>
-                                            { this.state.showAdd && // if this part is false, the next part won't show
-                                                `Name: ${movie.title}` } 
-                                        </section> 
-                                    </div>
-                                );
-                            })}
+                    {this.props.reduxState.movieList.map((movie, index) => {
+                        return (
+                            <div className="card">
+                                <img width="135px" height="135px" src={movie.poster} alt={movie.title}/>
+                                <h2>Title: {movie.title}</h2>
+                                <p>ID:{movie.id}</p>
+                                <button onClick={this.togglAddRemove}>
+                                    {this.state.showAdd ? `Option A!` : `Option B!`}
+                                </button>
+                                <button onClick={(event)=>this.detailsPage(movie.id, movie.description)}>Get Details!</button>
+                                <section>
+                                    { this.state.showAdd && // if this part is false, the next part won't show
+                                        `Name: ${movie.title}` } 
+                                </section> 
+                            </div>
+                        );
+                    })}
             </div>
         );
     }
