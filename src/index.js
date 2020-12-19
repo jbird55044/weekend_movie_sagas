@@ -18,6 +18,7 @@ function* rootSaga() {
     yield takeEvery ('FETCH_MOVIES', fetchMovies);
     yield takeEvery ('FETCH_GENRES', fetchGenres);
     yield takeEvery ('FETCH_GENRES_TABLE', fetchGenresTable);
+    yield takeEvery ('FETCH_MOVIE_GENRES', fetchMovieGenres);
     yield takeEvery('ADD_MOVIE', addMovie);
 }
 
@@ -58,6 +59,19 @@ function* fetchGenres() {
     } catch ( error ) {
         console.log('error with Movie get request', error);
     }
+
+} function* fetchMovieGenres(movieId) {
+    // TODO - Move GET request from App.js
+    console.log('In feth MovieGenre Saga, ID:', movieId);
+    // Go to server, update redux store with data from server
+    try {
+        // get data from db
+        const response = yield axios.get(`/api/genre/detail/${movieId.payload}`);
+        // put data into store via Reducer
+        yield put({ type: 'SET_MOVIES_GENRES', payload: response.data });
+    } catch ( error ) {
+        console.log('error with Specific Movie Genres GET', error);
+    }
 } 
 
 function* fetchGenresTable() {
@@ -81,6 +95,16 @@ const sagaMiddleware = createSagaMiddleware();
 const movieList = (state = [], action) => {
     switch (action.type) {
         case 'SET_MOVIES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
+// Used to store a specific movie's genres when detail 
+const movieGenres = (state = [], action) => {
+    switch (action.type) { //////////
+        case 'SET_MOVIES_GENRES':
             return action.payload;
         default:
             return state;
@@ -111,7 +135,8 @@ const storeInstance = createStore(
     combineReducers({
         movieList,
         genreListTable,
-        currentMovieDetails
+        currentMovieDetails,
+        movieGenres
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

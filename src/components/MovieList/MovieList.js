@@ -23,10 +23,12 @@ class MovieList extends Component {
         // this.addPizza()
     }
 
-    detailsPage = (id, description) => {
+    detailsPage = (movieId, description) => {
         this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: description});
-        // console.log (`history`, this.props.history);
+        this.props.dispatch({type: 'FETCH_MOVIE_GENRES', payload: movieId});
+        console.log (`genres from db call`, this.props.reduxState.movieGenres);
         this.props.history.push("/DetailsPage");
+
     };
     
 
@@ -37,7 +39,7 @@ class MovieList extends Component {
                 <h3>Movie List:</h3>
                     {this.props.reduxState.movieList.map((movie, index) => {
                         return (
-                            <div className="card">
+                            <div className="card" key={index}>
                                 <img width="135px" height="135px" src={movie.poster} alt={movie.title}/>
                                 <h2>Title: {movie.title}</h2>
                                 <p>ID:{movie.id}</p>

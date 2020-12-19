@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import {HashRouter as Router, Route} from 'react-router-dom';
 
 import './DetailsPage.css'
 
@@ -25,8 +24,11 @@ class DetailsPage extends Component {
                 <button onClick={this.backToList}>Back To List</button>
 
                 <h3>Genres Associtated to this Movie:</h3>
-
-
+                {this.props.reduxState.movieGenres.map((genre, index) => {
+                        return (
+                          <p>{genre.name}</p>
+                        );
+                    })}
             </div>
         )
     }
