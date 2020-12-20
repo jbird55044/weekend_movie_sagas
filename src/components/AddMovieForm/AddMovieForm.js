@@ -1,6 +1,48 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import './AddMovieForm.css'
+import classNames from 'classnames';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import MenuItem from '@material-ui/core/MenuItem';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+
+const styles = theme => ({
+    container: {
+      display: 'flex',
+      flexWrap: 'wrap',
+    },
+    textField: {
+      marginLeft: theme.spacing.unit,
+      marginRight: theme.spacing.unit,
+    },
+    dense: {
+      marginTop: 16,
+    },
+    menu: {
+      width: 200,
+    },
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+      },
+      formControl: {
+        margin: theme.spacing.unit,
+        minWidth: 120,
+        maxWidth: 300,
+      },
+      chips: {
+        display: 'flex',
+        flexWrap: 'wrap',
+      },
+      chip: {
+        margin: theme.spacing.unit / 4,
+      },
+      noLabel: {
+        marginTop: theme.spacing.unit * 3,
+      },
+  });
 
 class AddMovieForm extends Component {
     // You will need to keep this state in this component
@@ -68,13 +110,46 @@ class AddMovieForm extends Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <>
-                <form onSubmit={this.addMovie} >
-                    <input value={this.state.movieToAdd.title} onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" />
-                    <input value={this.state.movieToAdd.poster} onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" />
-                    <input value={this.state.movieToAdd.description} onChange={(event)=>this.handleChangeFor(event, 'description')} type="text" placeholder="description" size="200"/>
-                    <p></p>
+                <form className={classes.container} noValidate autoComplete="off" onSubmit={this.addMovie} >
+                <TextField
+                    required
+                    value={this.state.movieToAdd.title} 
+                    onChange={(event)=>this.handleChangeFor(event, 'title')}
+                    id="outlined-required"
+                    label="Title"
+                    defaultValue="Title"
+                    className={classes.textField}
+                    margin="normal"
+                    variant="outlined"
+                 />
+                 <TextField
+                    required
+                    value={this.state.movieToAdd.poster} 
+                    onChange={(event)=>this.handleChangeFor(event, 'poster')}
+                    id="outlined-required"
+                    label="Poster Location"
+                    defaultValue="poster location"
+                    className={classes.textField}
+                    margin="normal"
+                    variant="outlined"
+                 />
+                 <TextField
+                    multiline
+                    rowsMax="4"
+                    value={this.state.movieToAdd.description} 
+                    onChange={(event)=>this.handleChangeFor(event, 'description')}
+                    id="outlined-required"
+                    label="Description of Movie"
+                    className={classes.textField}
+                    margin="normal"
+                    variant="outlined"
+                 />
+                    {/* <input value={this.state.movieToAdd.title} onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" /> */}
+                    {/* <input value={this.state.movieToAdd.poster} onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" /> */}
+                    <p>&nbsp;</p>
                     <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
                             {this.renderGenreSelectionList()}
                     </select>
@@ -90,4 +165,4 @@ const putReduxStateOnProps = (reduxState) => ({
     reduxState
   })
 
-export default connect(putReduxStateOnProps) (AddMovieForm); 
+export default connect(putReduxStateOnProps)(withStyles(styles)(AddMovieForm)); 
