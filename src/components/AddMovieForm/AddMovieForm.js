@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import './AddMovieForm.css'
-import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
-
-
-
+import Button from '@material-ui/core/Button';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 
 const styles = theme => ({
@@ -35,22 +32,34 @@ const styles = theme => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      formControl: {
+    },
+    formControl: {
         margin: theme.spacing.unit,
         minWidth: 120,
         maxWidth: 300,
-      },
-      chips: {
+    },
+    chips: {
         display: 'flex',
         flexWrap: 'wrap',
-      },
-      chip: {
+    },
+    chip: {
         margin: theme.spacing.unit / 4,
-      },
-      noLabel: {
+    },
+    noLabel: {
         marginTop: theme.spacing.unit * 3,
-      },
+    },
+    button: {
+        margin: theme.spacing.unit,
+    },
+    leftIcon: {
+        marginRight: theme.spacing.unit,
+    },
+    rightIcon: {
+        marginLeft: theme.spacing.unit,
+    },
+    iconSmall: {
+        fontSize: 20,
+    },
   });
   const ITEM_HEIGHT = 48;
   const ITEM_PADDING_TOP = 8;
@@ -74,9 +83,7 @@ const styles = theme => ({
       
 
 class AddMovieForm extends Component {
-    // You will need to keep this state in this component
-    // if you're only using something in one component,
-    // you do not need to move it to redux
+    
     state = {
         movieToAdd: {
             title: '',
@@ -139,6 +146,16 @@ class AddMovieForm extends Component {
         event.preventDefault();
         console.log (`State being dispatched:`, this.state.movieToAdd);
         this.props.dispatch({ type: 'ADD_MOVIE', payload: this.state.movieToAdd })    
+        this.setState({
+            movieToAdd: {
+                title: '',
+                poster: '',
+                description: '',
+                genre_id: [],
+            },
+            chipGenre: []
+        });
+        alert ('Movie Added')
     };
 
     cancelAddMovie = () => {
@@ -149,7 +166,8 @@ class AddMovieForm extends Component {
                 poster: '',
                 description: '',
                 genre_id: [],
-            }
+            },
+            chipGenre: []
         });
     }
 
@@ -191,10 +209,6 @@ class AddMovieForm extends Component {
                     margin="normal"
                     variant="outlined"
                  />
-                    {/* <input value={this.state.movieToAdd.title} onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" /> */}
-                    {/* <input value={this.state.movieToAdd.poster} onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" /> */}
-                    <p>&nbsp;</p>
-
                     <FormControl className={classes.formControl}>
                         {/* {JSON.stringify(this.props.reduxState.genreListTable)} */}
                         <InputLabel htmlFor="select-multiple-chip">Select Genres</InputLabel>
@@ -219,18 +233,22 @@ class AddMovieForm extends Component {
                             ))}
                         </Select>
                     </FormControl>
-
-                    {/* <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
-                            {this.renderGenreSelectionList()}
-                    </select> */}
                     <input type="submit" value="Submit" />
                 </form>
-                <button onClick={this.cancelAddMovie}>Cancel</button>
+                <Button variant="contained" color="default" className={classes.button} onClick={this.cancelAddMovie}>
+                    Cancel Add
+                    <CancelIcon className={classes.rightIcon} />  
+                </Button> 
+                {/* <button onClick={this.cancelAddMovie}>Cancel</button> */}
             </>
         )
     }
 }
 
+AddMovieForm.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+  
 const putReduxStateOnProps = (reduxState) => ({
     reduxState
   })

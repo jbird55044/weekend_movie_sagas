@@ -3,7 +3,6 @@ import {HashRouter as Router, Route, Link} from 'react-router-dom';
 import './App.css';
 import Home from '../Home/Home';
 import MovieList from '../MovieList/MovieList';
-import MovieListItem from '../MovieListItem/MovieListItem';
 import DetailsPage from '../DetailsPage/DetailsPage';
 import AddMovieForm from '../AddMovieForm/AddMovieForm';
 // import Checkout from '../Checkout/Checkout';
@@ -24,7 +23,6 @@ class App extends Component {
 
           <Route exact path="/" component={Home} />
           <Route exact path="/MovieList" component={MovieList} />
-          <Route exact path="/MovieListItem" component={MovieListItem} />
           <Route exact path="/DetailsPage" component={DetailsPage} />
           <Route exact path="/AddMovieForm" component={AddMovieForm} />
         </Router>
