@@ -66,7 +66,7 @@ const styles = theme => ({
     function getStyles(name, that) {
         return {
           fontWeight:
-            that.state.name.indexOf(name) === -1
+            that.state.movieToAdd.genre_id.indexOf(name.id) === -1
               ? that.props.theme.typography.fontWeightRegular
               : that.props.theme.typography.fontWeightMedium,
         };
@@ -100,16 +100,24 @@ class AddMovieForm extends Component {
         }
 
     handleChangeFor = (event, inputProperty) => {
-        if ( inputProperty === 'genre_id') {
+        if ( inputProperty === 'genre_id_old') {
             let collectedValue = Array.from(event.target.selectedOptions, option => parseInt(option.value));
             console.log (`In Hadle Change, collectedValue:`, collectedValue);
             this.setState({
                 movieToAdd: {
-                    ...this.state.movieToAdd, 
+                    // ...this.state.movieToAdd, 
                     genre_id: collectedValue
                 }
+            });  
+        }  else if ( inputProperty === 'genre_id') {
+            this.setState({ 
+                movieToAdd: {
+                    ...this.state.movieToAdd,
+                    genre_id: event.target.value
+                } 
             });
-        }  else {
+            console.log (`Genre State:`, this.state.movieToAdd.genre_id);
+        } else {
             this.setState({
               // this is a spread to put variables into respective homes below layer 1
               movieToAdd: {
@@ -182,7 +190,7 @@ class AddMovieForm extends Component {
 
                     <FormControl className={classes.formControl}>
                         {/* {JSON.stringify(this.props.reduxState.genreListTable)} */}
-                        <InputLabel htmlFor="select-multiple-chip">Chip</InputLabel>
+                        <InputLabel htmlFor="select-multiple-chip">Select Genres</InputLabel>
                         <Select
                             multiple
                             value={this.state.movieToAdd.genre_id}
@@ -191,14 +199,14 @@ class AddMovieForm extends Component {
                             renderValue={selected => (
                             <div className={classes.chips}>
                                 {selected.map(value => (
-                                <Chip key={value.id} label={value.name} className={classes.chip} />
+                                <Chip  key={value.id} label={value.name} className={classes.chip} />
                                 ))}
                             </div>
                             )}
                             MenuProps={MenuProps}
                         >   {JSON.stringify(this.props.reduxState.genreListTable)}
                             {this.props.reduxState.genreListTable.map(name => (
-                            <MenuItem key={name.id} value={name.name} style={getStyles(name, this)}>
+                            <MenuItem key={name.id} value={name} style={getStyles(name, this)}>
                                 {name.name}
                             </MenuItem>
                             ))}
@@ -220,4 +228,4 @@ const putReduxStateOnProps = (reduxState) => ({
     reduxState
   })
 
-export default connect(putReduxStateOnProps)(withStyles(styles)(AddMovieForm)); 
+export default connect(putReduxStateOnProps)(withStyles(styles, { withTheme: true })(AddMovieForm)); 
