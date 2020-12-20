@@ -26,7 +26,7 @@ function* addMovie( action ) {
     console.log('index post AddMovie', action.payload);
     try { 
         yield axios.post('/api/movie', action.payload)
-        yield put({ type: 'FETCH_MOVIES' }) 
+        // yield put({ type: 'FETCH_MOVIES' }) 
     } catch (error) {
         console.log('error with add favorite request', error);
     }

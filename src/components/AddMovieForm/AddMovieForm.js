@@ -30,7 +30,7 @@ class AddMovieForm extends Component {
 
     handleChangeFor = (event, inputProperty) => {
         if ( inputProperty === 'genre_id') {
-            let collectedValue = Array.from(event.target.selectedOptions, option => option.value);
+            let collectedValue = Array.from(event.target.selectedOptions, option => parseInt(option.value));
             console.log (`In Hadle Change, collectedValue:`, collectedValue);
             this.setState({
                 movieToAdd: {
@@ -50,7 +50,6 @@ class AddMovieForm extends Component {
     }
  
     addMovie = (event) => {
-        
         event.preventDefault();
         console.log (`State being dispatched:`, this.state.movieToAdd);
         this.props.dispatch({ type: 'ADD_MOVIE', payload: this.state.movieToAdd })    
