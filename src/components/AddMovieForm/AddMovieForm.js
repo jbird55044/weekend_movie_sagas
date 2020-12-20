@@ -7,6 +7,15 @@ import { withStyles } from '@material-ui/core/styles';
 import MenuItem from '@material-ui/core/MenuItem';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
+import Input from '@material-ui/core/Input';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import Chip from '@material-ui/core/Chip';
+
+
+
+
 
 const styles = theme => ({
     container: {
@@ -43,6 +52,26 @@ const styles = theme => ({
         marginTop: theme.spacing.unit * 3,
       },
   });
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+     PaperProps: {
+        style: {
+            maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+            width: 250,
+        },
+      },
+    };
+
+    function getStyles(name, that) {
+        return {
+          fontWeight:
+            that.state.name.indexOf(name) === -1
+              ? that.props.theme.typography.fontWeightRegular
+              : that.props.theme.typography.fontWeightMedium,
+        };
+      }
+      
 
 class AddMovieForm extends Component {
     // You will need to keep this state in this component
@@ -150,6 +179,32 @@ class AddMovieForm extends Component {
                     {/* <input value={this.state.movieToAdd.title} onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" /> */}
                     {/* <input value={this.state.movieToAdd.poster} onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" /> */}
                     <p>&nbsp;</p>
+
+                    <FormControl className={classes.formControl}>
+                        {/* {JSON.stringify(this.props.reduxState.genreListTable)} */}
+                        <InputLabel htmlFor="select-multiple-chip">Chip</InputLabel>
+                        <Select
+                            multiple
+                            value={this.state.movieToAdd.genre_id}
+                            onChange={(event)=>this.handleChangeFor(event, 'genre_id')}
+                            input={<Input id="select-multiple-chip" />}
+                            renderValue={selected => (
+                            <div className={classes.chips}>
+                                {selected.map(value => (
+                                <Chip key={value.id} label={value.name} className={classes.chip} />
+                                ))}
+                            </div>
+                            )}
+                            MenuProps={MenuProps}
+                        >   {JSON.stringify(this.props.reduxState.genreListTable)}
+                            {this.props.reduxState.genreListTable.map(name => (
+                            <MenuItem key={name.id} value={name.name} style={getStyles(name, this)}>
+                                {name.name}
+                            </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
                     <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
                             {this.renderGenreSelectionList()}
                     </select>
