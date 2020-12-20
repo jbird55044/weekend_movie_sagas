@@ -53,20 +53,35 @@ class AddMovieForm extends Component {
         event.preventDefault();
         console.log (`State being dispatched:`, this.state.movieToAdd);
         this.props.dispatch({ type: 'ADD_MOVIE', payload: this.state.movieToAdd })    
+    };
+
+    cancelAddMovie = () => {
+        console.log (`Cancel Add, Clear State`);
+        this.setState({
+            movieToAdd: {
+                title: '',
+                poster: '',
+                description: '',
+                genre_id: [],
+            }
+        });
     }
 
     render() {
         return (
-            <form onSubmit={this.addMovie}>
-                <input onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" />
-                <input onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" />
-                <input onChange={(event)=>this.handleChangeFor(event, 'description')} type="text" placeholder="description" />
-                <p></p>
-                <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
-                        {this.renderGenreSelectionList()}
-                </select>
-                <input type="submit" value="Submit" />
-            </form>
+            <>
+                <form onSubmit={this.addMovie} >
+                    <input value={this.state.movieToAdd.title} onChange={(event)=>this.handleChangeFor(event, 'title')} type="text" placeholder="title" />
+                    <input value={this.state.movieToAdd.poster} onChange={(event)=>this.handleChangeFor(event, 'poster')} type="text" placeholder="poster" />
+                    <input value={this.state.movieToAdd.description} onChange={(event)=>this.handleChangeFor(event, 'description')} type="text" placeholder="description" size="200"/>
+                    <p></p>
+                    <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
+                            {this.renderGenreSelectionList()}
+                    </select>
+                    <input type="submit" value="Submit" />
+                </form>
+                <button onClick={this.cancelAddMovie}>Cancel</button>
+            </>
         )
     }
 }

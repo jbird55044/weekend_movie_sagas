@@ -20,6 +20,7 @@ function* rootSaga() {
     yield takeEvery ('FETCH_GENRES_TABLE', fetchGenresTable);
     yield takeEvery ('FETCH_MOVIE_GENRES', fetchMovieGenres);
     yield takeEvery('ADD_MOVIE', addMovie);
+    // yield takeEvery('CANCEL_ADD_MOVIE', cancelAddMovie);
 }
 
 function* addMovie( action ) {
@@ -31,6 +32,16 @@ function* addMovie( action ) {
         console.log('error with add favorite request', error);
     }
 }
+
+// function* cancelAddMovie ( action ) {
+//     console.log('index post AddMovie', action.payload);
+//     try { 
+//         yield axios.post('/api/movie', action.payload)
+//         // yield put({ type: 'FETCH_MOVIES' }) 
+//     } catch (error) {
+//         console.log('error with add favorite request', error);
+//     }
+// }
 
 
 function* fetchMovies() {
