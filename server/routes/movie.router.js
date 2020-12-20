@@ -33,13 +33,13 @@ router.post('/', (req, res) => {
     const createdMovieId = result.rows[0].id
 
     // Loop Genre Array     
-    for (eachGenre of req.body.genre_id) {
+    for (eachGenre of req.body.genre_objects) {
         const insertMovieGenreQuery = `
         INSERT INTO "movies_genres" ("movie_id", "genre_id")
         VALUES  ($1, $2);
         `
         // SECOND QUERY MAKES GENRE FOR THAT NEW MOVIE
-        pool.query(insertMovieGenreQuery, [createdMovieId, eachGenre]).then(result => {
+        pool.query(insertMovieGenreQuery, [createdMovieId, eachGenre.id]).then(result => {
             // res.sendStatus(201);
         }).catch(err => {
           // catch for second query

@@ -66,7 +66,7 @@ const styles = theme => ({
     function getStyles(name, that) {
         return {
           fontWeight:
-            that.state.movieToAdd.genre_id.indexOf(name.id) === -1
+            that.state.chipGenre.indexOf(name.id) === -1
               ? that.props.theme.typography.fontWeightRegular
               : that.props.theme.typography.fontWeightMedium,
         };
@@ -82,8 +82,9 @@ class AddMovieForm extends Component {
             title: '',
             poster: '',
             description: '',
-            genre_id: [],
-        }
+            genre_objects: [],
+        },
+        chipGenre: []
     }
 
     componentDidMount() {
@@ -102,7 +103,7 @@ class AddMovieForm extends Component {
     handleChangeFor = (event, inputProperty) => {
         if ( inputProperty === 'genre_id_old') {
             let collectedValue = Array.from(event.target.selectedOptions, option => parseInt(option.value));
-            console.log (`In Hadle Change, collectedValue:`, collectedValue);
+            console.log (`In Handle Change, collectedValue:`, collectedValue);
             this.setState({
                 movieToAdd: {
                     // ...this.state.movieToAdd, 
@@ -110,13 +111,19 @@ class AddMovieForm extends Component {
                 }
             });  
         }  else if ( inputProperty === 'genre_id') {
+            console.log (`value, valuid`, event.target.value, event.target.key);
             this.setState({ 
                 movieToAdd: {
                     ...this.state.movieToAdd,
-                    genre_id: event.target.value
-                } 
+                    genre_objects: event.target.value
+                },
+                ...this.state.chipGenre,
+                chipGenre: event.target.value
             });
-            console.log (`Genre State:`, this.state.movieToAdd.genre_id);
+            console.log (`event target:`, event);
+            console.log (`OnChange Genre State:`, this.state.chipGenre);
+            console.log (`OnChange MovieToAdd:`, this.state.movieToAdd.genre_id);
+
         } else {
             this.setState({
               // this is a spread to put variables into respective homes below layer 1
@@ -193,7 +200,7 @@ class AddMovieForm extends Component {
                         <InputLabel htmlFor="select-multiple-chip">Select Genres</InputLabel>
                         <Select
                             multiple
-                            value={this.state.movieToAdd.genre_id}
+                            value={this.state.chipGenre}
                             onChange={(event)=>this.handleChangeFor(event, 'genre_id')}
                             input={<Input id="select-multiple-chip" />}
                             renderValue={selected => (
@@ -204,7 +211,7 @@ class AddMovieForm extends Component {
                             </div>
                             )}
                             MenuProps={MenuProps}
-                        >   {JSON.stringify(this.props.reduxState.genreListTable)}
+                        >   
                             {this.props.reduxState.genreListTable.map(name => (
                             <MenuItem key={name.id} value={name} style={getStyles(name, this)}>
                                 {name.name}
@@ -213,9 +220,9 @@ class AddMovieForm extends Component {
                         </Select>
                     </FormControl>
 
-                    <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
+                    {/* <select id="genre" name="genre" onChange={(event)=>this.handleChangeFor(event, 'genre_id')} multiple size="8">
                             {this.renderGenreSelectionList()}
-                    </select>
+                    </select> */}
                     <input type="submit" value="Submit" />
                 </form>
                 <button onClick={this.cancelAddMovie}>Cancel</button>
