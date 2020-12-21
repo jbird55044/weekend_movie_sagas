@@ -5,7 +5,7 @@ const pool = require('../modules/pool')
 
 router.get('/', (req, res) => {
   const queryText = 'SELECT * FROM movies';
-  console.log ('in Movie get')
+  // console.log ('in Movie get')
   pool.query(queryText)
     .then((result) => { res.send(result.rows); })
     .catch((err) => {
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 
 router.post('/', (req, res) => {
-  console.log('incoming req.body:',req.body);
+  // console.log('incoming req.body:',req.body);
   // RETURNING "id" will give us back the id of the created movie
   const insertMovieQuery = `
   INSERT INTO "movies" ("title", "poster", "description")
