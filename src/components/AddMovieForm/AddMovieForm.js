@@ -13,6 +13,12 @@ import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import CancelIcon from '@material-ui/icons/Cancel';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import Slide from '@material-ui/core/Slide';
 
 
 const styles = theme => ({
@@ -81,7 +87,11 @@ const styles = theme => ({
               : that.props.theme.typography.fontWeightMedium,
         };
       }
-      
+
+    function Transition(props) {
+        return <Slide direction="up" {...props} />;
+    }
+        
 
 class AddMovieForm extends Component {
     
@@ -92,7 +102,8 @@ class AddMovieForm extends Component {
             description: '',
             genre_objects: [],
         },
-        chipGenre: []
+        chipGenre: [],
+        openSuccessMessage: false,
     }
 
     componentDidMount() {
@@ -156,8 +167,13 @@ class AddMovieForm extends Component {
             },
             chipGenre: []
         });
-        alert ('Movie Added')
+        this.setState({ openSuccessMessage: true });
+        // alert ('Movie Added')
     };
+
+    handleClose = () => {
+        this.setState({ openSuccessMessage: false });
+    }
 
     cancelAddMovie = () => {
         console.log (`Cancel Add, Clear State`);
@@ -183,7 +199,6 @@ class AddMovieForm extends Component {
                     onChange={(event)=>this.handleChangeFor(event, 'title')}
                     id="outlined-required"
                     label="Title"
-                    defaultValue="Title"
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
@@ -194,7 +209,6 @@ class AddMovieForm extends Component {
                     onChange={(event)=>this.handleChangeFor(event, 'poster')}
                     id="outlined-required"
                     label="Poster Location"
-                    defaultValue="poster location"
                     className={classes.textField}
                     margin="normal"
                     variant="outlined"
@@ -243,7 +257,30 @@ class AddMovieForm extends Component {
                     Cancel Add
                     <CancelIcon className={classes.rightIcon} />  
                 </Button> 
-                {/* <button onClick={this.cancelAddMovie}>Cancel</button> */}
+                <div>
+                    <Dialog
+                        open={this.state.openSuccessMessage}
+                        TransitionComponent={Transition}
+                        keepMounted
+                        onClose={this.handleClose}
+                        aria-labelledby="alert-dialog-slide-title"
+                        aria-describedby="alert-dialog-slide-description"
+                        >
+                        <DialogTitle id="alert-dialog-slide-title">
+                            {"Added a Movie"}
+                        </DialogTitle>
+                        <DialogContent>
+                            <DialogContentText id="alert-dialog-slide-description">
+                            Congratulations, your movie was added to the system.
+                            </DialogContentText>
+                        </DialogContent>
+                        <DialogActions>
+                            <Button onClick={this.handleClose} color="primary">
+                            Close
+                            </Button>
+                        </DialogActions>
+                    </Dialog>
+                </div>
             </>
         )
     }
