@@ -3,7 +3,7 @@
 ![TOP_LANGUAGE](https://img.shields.io/github/languages/top/jbird55044/weekend_movie_sagas.svg?style=flat-square)
 ![FORKS](https://img.shields.io/github/forks/jbird55044/weekend_movie_sagas.svg?style=social)
 
-# Redux Feedback Loop
+# Redux Movie Manager
 
 ## Description
 
