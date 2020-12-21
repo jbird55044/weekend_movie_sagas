@@ -1,8 +1,33 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-
+import PropTypes from 'prop-types';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Card from '@material-ui/core/Card';
+import CardActionArea from '@material-ui/core/CardActionArea';
+import CardActions from '@material-ui/core/CardActions';
+import CardContent from '@material-ui/core/CardContent';
+import CardMedia from '@material-ui/core/CardMedia';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 import './DetailsPage.css'
 
+const styles = {
+    card: {
+      maxWidth: 400,
+      margin: 20,
+      marginLeft: 40,
+    },
+    media: {
+      height: 100,
+    },
+  };
+  
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 2,
+        padding: theme.spacing(2)
+    }
+}))
 
 class DetailsPage extends Component {
 
@@ -15,23 +40,51 @@ class DetailsPage extends Component {
     };
 
     render() {
-
+        const { classes } = this.props;
         return (
-            <div className="detailsClass">
-                <h1>Details About your Movie:</h1>
-                <p>{this.props.reduxState.currentMovieDetails}</p>
-                <p>&nbsp;</p>
-                <button onClick={this.backToList}>Back To List</button>
 
-                <h3>Genres Associtated to this Movie:</h3>
-                {this.props.reduxState.movieGenres.map((genre, index) => {
+            <Card className={classes.card} >
+            <CardActionArea>
+                <CardMedia
+                className={classes.media}
+                image="images/home_image.png"
+                title={this.props.reduxState.currentMovieDetails.title}
+                />
+                <CardContent>
+                <Typography gutterBottom variant="h4" component="h2">
+                    {this.props.reduxState.currentMovieDetails.title}
+                </Typography>
+                <Typography component="p">
+                    {this.props.reduxState.currentMovieDetails.description}
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                    --------------------------------
+                </Typography>
+                <Typography gutterBottom variant="h5" component="h2">
+                    Genres Associtated to this Movie:
+                </Typography>
+                <Typography component="p">
+                    {this.props.reduxState.movieGenres.map((genre, index) => {
                         return (
-                          <p key={index}>{genre.name}</p>
+                          <li key={index}>{genre.name}</li>
                         );
                     })}
-            </div>
+                </Typography>
+                </CardContent>
+            </CardActionArea>
+            <CardActions>
+                <Button onClick={this.backToList} size="small" color="primary">
+                Return to List!
+                </Button>
+            </CardActions>
+        </Card>
+
+ 
         )
     }
 }
+
+DetailsPage.propTypes = {classes: PropTypes.object.isRequired,};
 const putReduxStateOnProps = (reduxState) => ({ reduxState })
-export default connect(putReduxStateOnProps)(DetailsPage);
+
+export default connect(putReduxStateOnProps)(withStyles(styles)(DetailsPage));

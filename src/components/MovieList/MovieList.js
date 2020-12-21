@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './MovieList.css'
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import { makeStyles } from '@material-ui/core/styles'
+import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
@@ -50,8 +49,9 @@ class MovieList extends Component {
         })
     }
 
-    detailsPage = (movieId, description) => {
-        this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: description});
+    detailsPage = (movieId, title, description) => {
+        let detailPayload = {title,description}
+        this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: detailPayload});
         this.props.dispatch({type: 'FETCH_MOVIE_GENRES', payload: movieId});
         console.log (`genres from db call`, this.props.reduxState.movieGenres);
         this.props.history.push("/DetailsPage");
@@ -91,7 +91,7 @@ class MovieList extends Component {
                                     </CardContent>
                                 </CardActionArea>
                                 <CardActions>
-                                    <Button onClick={(event)=>this.detailsPage(movie.id, movie.description)} size="small" color="primary">
+                                    <Button onClick={(event)=>this.detailsPage(movie.id, movie.title, movie.description)} size="small" color="primary">
                                     Get Details!
                                     </Button>
                                 </CardActions>
