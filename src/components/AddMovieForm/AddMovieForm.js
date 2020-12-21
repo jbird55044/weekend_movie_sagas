@@ -12,6 +12,7 @@ import Select from '@material-ui/core/Select';
 import Chip from '@material-ui/core/Chip';
 import Button from '@material-ui/core/Button';
 import CancelIcon from '@material-ui/icons/Cancel';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 
 
 const styles = theme => ({
@@ -175,7 +176,7 @@ class AddMovieForm extends Component {
         const { classes } = this.props;
         return (
             <>
-                <form className={classes.container} noValidate autoComplete="off" onSubmit={this.addMovie} >
+                <form className={classes.container} noValidate autoComplete="off" >
                 <TextField
                     required
                     value={this.state.movieToAdd.title} 
@@ -233,8 +234,11 @@ class AddMovieForm extends Component {
                             ))}
                         </Select>
                     </FormControl>
-                    <input type="submit" value="Submit" />
                 </form>
+                <Button variant="contained" color="default" className={classes.button} onClick={this.addMovie} >
+                    Add Movie!
+                    <ArrowUpwardIcon className={classes.rightIcon} />  
+                </Button> 
                 <Button variant="contained" color="default" className={classes.button} onClick={this.cancelAddMovie}>
                     Cancel Add
                     <CancelIcon className={classes.rightIcon} />  
