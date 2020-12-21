@@ -3,8 +3,10 @@ import { connect } from 'react-redux';
 import './MovieList.css'
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles'
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
+import Grid from '@material-ui/core/Grid';
 import CardActions from '@material-ui/core/CardActions';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -21,6 +23,12 @@ const styles = {
     },
   };
   
+const useStyles = makeStyles(theme => ({
+    root: {
+        flexGrow: 2,
+        padding: theme.spacing(2)
+    }
+}))
 
 class MovieList extends Component {
     
@@ -54,9 +62,17 @@ class MovieList extends Component {
     render() {
         const { classes } = this.props;
         return (
-            <div>
-                <hr/>
-                <h3>Movie List:</h3>
+            <div className={classes.root}>
+            <hr/>
+            <h3>Movie List:</h3>
+            <Grid
+                container
+                spacing={2}
+                direction="row"
+                justify="flex-start"
+                alignItems="flex-start"
+            >
+            
                     {this.props.reduxState.movieList.map((movie, index) => {
                         return (
                             <Card key={index} className={classes.card} >
@@ -81,26 +97,9 @@ class MovieList extends Component {
                                     </Button>
                                 </CardActions>
                             </Card>
-
-
-
-
-
-                            // <div className="card" key={index}>
-                            //     <img width="135px" height="135px" src={movie.poster} alt={movie.title}/>
-                            //     <h2>Title: {movie.title}</h2>
-                            //     <p>ID:{movie.id}</p>
-                            //     <button onClick={this.togglAddRemove}>
-                            //         {this.state.showAdd ? `Option A!` : `Option B!`}
-                            //     </button>
-                            //     <button onClick={(event)=>this.detailsPage(movie.id, movie.description)}>Get Details!</button>
-                            //     <section>
-                            //         { this.state.showAdd && // if this part is false, the next part won't show
-                            //             `Name: ${movie.title}` } 
-                            //     </section> 
-                            // </div>
                         );
                     })}
+            </Grid>
             </div>
         );
     }
