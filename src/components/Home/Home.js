@@ -7,10 +7,11 @@ class Home extends Component {
   
     render() {
         return (
-            <div>
-                <h3>Welcome Home</h3>
+            <div className="homePageClass">
+                <h3>Welcome to Movie Home</h3>
                 <p>Here you will be able to do great stuff.</p>
-                <p>Greatness does not come easily!</p>
+                <p>Manage your Movie Portfolio!</p>
+                <img src="images/home_image.png" alt="theater seating" />
             </div>
         );
     }

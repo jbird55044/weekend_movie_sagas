@@ -63,7 +63,6 @@ class MovieList extends Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-            <hr/>
             <h3>Movie List:</h3>
             <Grid
                 container

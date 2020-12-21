@@ -20,6 +20,7 @@ class App extends Component {
               <li><Link to="/AddMovieForm">Add Movie Form</Link></li>
             </ul>
           </nav>
+          <hr/>
 
           <Route exact path="/" component={Home} />
           <Route exact path="/MovieList" component={MovieList} />
