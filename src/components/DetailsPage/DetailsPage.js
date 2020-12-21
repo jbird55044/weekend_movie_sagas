@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import CardActions from '@material-ui/core/CardActions';
@@ -22,19 +22,10 @@ const styles = {
     },
   };
   
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 2,
-        padding: theme.spacing(2)
-    }
-}))
 
 class DetailsPage extends Component {
 
-    state = {
-        showAdd: true,
-        pizzaChoice: ''
-    }
+    
     backToList = () => {
         this.props.history.push("/MovieList");
     };

@@ -8,9 +8,8 @@ class Home extends Component {
     render() {
         return (
             <div className="homePageClass">
-                <h3>Welcome to Movie Home</h3>
+                <h3>Welcome to Movie Manager Deluxe!</h3>
                 <p>Here you will be able to do great stuff.</p>
-                <p>Manage your Movie Portfolio!</p>
                 <img src="images/home_image.png" alt="theater seating" />
             </div>
         );

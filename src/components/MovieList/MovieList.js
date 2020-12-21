@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './MovieList.css'
 import PropTypes from 'prop-types';
-import { withStyles, makeStyles } from '@material-ui/core/styles';
+import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
 import Grid from '@material-ui/core/Grid';
@@ -22,12 +22,7 @@ const styles = {
     },
   };
   
-const useStyles = makeStyles(theme => ({
-    root: {
-        flexGrow: 2,
-        padding: theme.spacing(2)
-    }
-}))
+
 
 class MovieList extends Component {
     
@@ -36,26 +31,20 @@ class MovieList extends Component {
         pizzaChoice: ''
     }
     
+    // Stage Redux with up to date db info
     componentDidMount() {
         // use component did mount to dispatch an action to request the plantList from the API
         this.props.dispatch({type: 'FETCH_MOVIES'});
         this.props.dispatch({type: 'FETCH_GENRES_TABLE'});
     }
 
-
-    togglAddRemove = () => {
-        this.setState({
-            showAdd: !this.state.showAdd // flip the boolean using ! NOT
-        })
-    }
-
+    // go to details page when invoked.  Updates redux prior to going
     detailsPage = (movieId, title, description) => {
         let detailPayload = {title,description}
         this.props.dispatch({type: 'UPDATE_DETAIL_REDUX', payload: detailPayload});
         this.props.dispatch({type: 'FETCH_MOVIE_GENRES', payload: movieId});
         console.log (`genres from db call`, this.props.reduxState.movieGenres);
         this.props.history.push("/DetailsPage");
-
     };
     
 

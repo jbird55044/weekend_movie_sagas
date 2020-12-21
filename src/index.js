@@ -23,6 +23,8 @@ function* rootSaga() {
     // yield takeEvery('CANCEL_ADD_MOVIE', cancelAddMovie);
 }
 
+// POST to add a movie to DB - NOTE in Router, Picture URL is hardcoded 
+// as there is no file uploaded in this version
 function* addMovie( action ) {
     console.log('index post AddMovie', action.payload);
     try { 
@@ -32,17 +34,6 @@ function* addMovie( action ) {
         console.log('error with add favorite request', error);
     }
 }
-
-// function* cancelAddMovie ( action ) {
-//     console.log('index post AddMovie', action.payload);
-//     try { 
-//         yield axios.post('/api/movie', action.payload)
-//         // yield put({ type: 'FETCH_MOVIES' }) 
-//     } catch (error) {
-//         console.log('error with add favorite request', error);
-//     }
-// }
-
 
 function* fetchMovies() {
     // Move GET request from App.js
@@ -114,7 +105,7 @@ const movieList = (state = [], action) => {
 
 // Used to store a specific movie's genres when detail 
 const movieGenres = (state = [], action) => {
-    switch (action.type) { //////////
+    switch (action.type) { 
         case 'SET_MOVIES_GENRES':
             return action.payload;
         default:
@@ -122,7 +113,7 @@ const movieGenres = (state = [], action) => {
     }
 }
 
-// Used to store the movie genres
+// Used to store the movie genres complete table for selectors
 const genreListTable = (state = [], action) => {
     switch (action.type) {
         case 'SET_GENRES_TABLE':
@@ -132,6 +123,7 @@ const genreListTable = (state = [], action) => {
     }
 }
 
+// loads redux with movie details and title for selected movie
 const currentMovieDetails = (state = [], action) => {
     switch (action.type) {
         case 'UPDATE_DETAIL_REDUX':
